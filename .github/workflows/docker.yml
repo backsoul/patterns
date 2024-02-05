@@ -1,0 +1,33 @@
+name: Go
+
+on:
+  push:
+    branches: ["master"]
+  pull_request:
+    branches: ["master"]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    services:
+      pattern:
+        image: ghcr.io/backsoul/patterns:latest # Reemplaza "your-image-name" con el nombre de tu imagen de Docker
+        ports:
+          - 8000:8000 # Asegúrate de que el puerto del contenedor sea el mismo que en tu Dockerfile
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: "1.21"
+
+      - name: Install jq
+        run: sudo apt-get -y install jq
+
+      - name: Build
+        run: go build -v ./...
+
+      - name: Test
+        run: |
+          docker exec pattern go test -v ./...
