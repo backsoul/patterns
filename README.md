@@ -2,6 +2,10 @@
 
 This is a simple example project demonstrating the use of the Factory Pattern in Go to connect to MySQL and PostgreSQL databases. The project provides a flexible way to switch between different types of databases by configuring the `.env` file.
 
+## Coverage
+
+Show coverage [aquí](./coverage.html).
+
 ## Prerequisites
 
 Before running the project, make sure you have the following installed:
