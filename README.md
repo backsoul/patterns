@@ -2,6 +2,12 @@
 
 [![Code Complexity](https://img.shields.io/badge/Code%20Complexity-$COMPLEXITY-green)](https://github.com/backsoul/patterns)
 
+## Complejidad Ciclomática
+
+[![Complejidad Ciclomática](https://img.shields.io/badge/Complejidad-Ciclom%C3%A1tica-green)](https://github.com/backsoul/patterns)
+
+La complejidad ciclomática actual de este proyecto es: ![COMPLEXITY](https://img.shields.io/badge/COMPLEXITY-$COMPLEXITY-green)
+
 # Go Database Factory Pattern Example
 
 This is a simple example project demonstrating the use of the Factory Pattern in Go to connect to MySQL and PostgreSQL databases. The project provides a flexible way to switch between different types of databases by configuring the `.env` file.

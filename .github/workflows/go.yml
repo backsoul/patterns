@@ -32,6 +32,7 @@ jobs:
           cloc --by-file --exclude-dir=vendor --exclude-lang=JSON,YAML .
           COMPLEXITY=$(cloc --by-file --exclude-dir=vendor --exclude-lang=JSON,YAML --csv . | awk -F, '{if ($6 > 15) print $6}')
           echo "COMPLEXITY=$COMPLEXITY" >> $GITHUB_ENV
+          echo "::set-output name=COMPLEXITY::$COMPLEXITY"
 
       - name: Upload coverage report
         uses: actions/upload-artifact@v2
