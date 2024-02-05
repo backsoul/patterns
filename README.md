@@ -21,7 +21,7 @@ Before running the project, make sure you have the following installed:
 2. Edit .env file:
 
    ```bash
-   descoment line for your favorite engine db.
+   uncomment line for your favorite engine db.
    ```
 
 3. up containers:
