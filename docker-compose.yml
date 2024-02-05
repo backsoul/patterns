@@ -23,7 +23,7 @@ services:
       - .:/app
     networks:
       - web
-    command: [ "go", "test", "-v", "./tests" ] # Ajusta el comando según la ubicación de tus archivos de prueba
+    command: [ "go", "test", "./..." ] # Ajusta el comando según la ubicación de tus archivos de prueba
     depends_on:
       - pattern
 
