@@ -28,6 +28,11 @@ jobs:
           git config --global user.name "CI Bot"
           git config --global user.email "bot@eremeev.ca"
 
+      - name: Create badge branch if not exists
+        run: |
+          git branch -a | grep remotes/origin/badge || git checkout -b badge
+        continue-on-error: true
+
       - name: generate an image
         run: |
           set -x
