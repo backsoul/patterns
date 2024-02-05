@@ -30,9 +30,9 @@ jobs:
       - name: Generate Coverage Badge
         run: |
           COVERAGE_BADGE_URL="URL_DEL_BADGE_QUE_COPIASTE_DE_BADGEN"
-          curl -s https://github.com/backsoul/patterns/blob/branch/coverage.out > coverage-badge.svg
+          curl -s https://github.com/backsoul/patterns/blob/master/coverage.out > coverage-badge.svg
         env:
-          COVERAGE_BADGE_URL: https://github.com/backsoul/patterns/blob/branch/coverage.out
+          COVERAGE_BADGE_URL: https://github.com/backsoul/patterns/blob/master/coverage.out
 
       - name: Upload Coverage Badge
         uses: actions/upload-artifact@v2
