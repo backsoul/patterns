@@ -1,20 +1,37 @@
-name: Go Test
+name: Docker Compose CI/CD
 
 on:
   push:
-    branches: ["master"]
-  pull_request:
-    branches: ["master"]
+    branches:
+      - master
 
 jobs:
-  test:
+  build:
     runs-on: ubuntu-latest
+
     services:
-      test:
-        image: ghcr.io/backsoul/patterns:latest
+      docker:
+        image: docker:latest
+        ports:
+          - 8000:8000
+        options: --privileged
+
     steps:
-      - name: Checkout repository
+      - name: Checkout Repository
         uses: actions/checkout@v2
-      - name: Run tests
+
+      - name: Build and Run Docker Compose
         run: |
-          docker exec -i test go test ./...
+          docker-compose build
+          docker-compose up -d
+          docker-compose ps
+        working-directory: .
+
+      - name: Run Tests
+        run: |
+          docker-compose exec test go test ./...
+        working-directory: .
+
+      - name: Stop Docker Compose
+        run: docker-compose down
+        working-directory: .
