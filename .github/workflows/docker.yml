@@ -1,40 +1,28 @@
-name: Docker Compose CI/CD
+name: Go Test
 
-on:
-  push:
-    branches:
-      - master
+on: [push, pull_request]
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
 
-    services:
-      docker:
-        image: docker:latest
-        ports:
-          - 8000:8000
-        options: --privileged
-
     steps:
-      - name: Checkout Repository
+      - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Create Docker Network
-        run: docker network create web
+      - name: Set up Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: 1.21
 
-      - name: Build and Run Docker Compose
-        run: |
-          docker-compose build
-          docker-compose up -d
-          docker-compose ps
-        working-directory: .
+      - name: Install dependencies
+        run: go mod download
 
-      - name: Run Tests
-        run: |
-          docker-compose up test
-        working-directory: .
+      - name: Run tests and generate coverage report
+        run: go test -coverprofile=coverage.out ./...
 
-      - name: Stop Docker Compose
-        run: docker-compose down
-        working-directory: .
+      - name: Upload coverage report
+        uses: actions/upload-artifact@v2
+        with:
+          name: coverage
+          path: coverage.out
