@@ -20,6 +20,9 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
+      - name: Create Docker Network
+        run: docker network create web
+
       - name: Build and Run Docker Compose
         run: |
           docker-compose build
