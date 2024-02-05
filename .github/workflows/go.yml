@@ -43,7 +43,7 @@ jobs:
           git fetch
           git checkout badge -f
           git pull
-          git merge origin/main  
+          git merge origin/master  
           curl "https://img.shields.io/badge/coverage-$total%25-$COLOR" > badge.svg
           git add .
           git commit -m "added badge"
