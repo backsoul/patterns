@@ -1,12 +1,8 @@
 [![Go](https://github.com/backsoul/patterns/actions/workflows/go.yml/badge.svg?branch=master)](https://github.com/backsoul/patterns/actions/workflows/go.yml)
 
-[![Code Complexity](https://img.shields.io/badge/Code%20Complexity-$COMPLEXITY-green)](https://github.com/backsoul/patterns)
+[![Code Complexity](https://img.shields.io/badge/Code%20Complexity-COMPLEXITY-green)](https://github.com/backsoul/patterns)
 
-## Complejidad Ciclomática
-
-[![Complejidad Ciclomática](https://img.shields.io/badge/Complejidad-Ciclom%C3%A1tica-green)](https://github.com/backsoul/patterns)
-
-La complejidad ciclomática actual de este proyecto es: ![COMPLEXITY](https://img.shields.io/badge/COMPLEXITY-$COMPLEXITY-green)
+# Go Database Factory Pattern Example
 
 # Go Database Factory Pattern Example
 
