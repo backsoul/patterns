@@ -19,32 +19,16 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@v2
         with:
-          go-version: 1.21 # Use the version compatible with your project
+          go-version: 1.21
 
-      - name: Install cloc
-        run: sudo apt-get -y install cloc
+      - name: Install dependencies
+        run: go mod download
 
       - name: Run tests and generate coverage report
         run: go test -coverprofile=coverage.out ./...
 
-      - name: Calculate code complexity
-        id: complexity
-        run: |
-          cloc --by-file --exclude-dir=vendor --exclude-lang=JSON,YAML .
-          COMPLEXITY=$(cloc --by-file --exclude-dir=vendor --exclude-lang=JSON,YAML --csv . | awk -F, '{if ($6 > 15) print $6}')
-          echo "COMPLEXITY=$COMPLEXITY" >> $GITHUB_ENV
-          echo "::set-output name=COMPLEXITY::$COMPLEXITY"
-
-      - name: Generate updated README
-        id: generate-readme
-        run: |
-          sed -i "s/\[Code Complexity\]/COMPLEXITY/g" README.md
-          echo "COMPLEXITY" >> README.md
-
-      - name: Commit and push changes
-        run: |
-          git config --global user.email "actions@github.com"
-          git config --global user.name "GitHub Actions"
-          git add README.md
-          git commit -m "Update README with complexity"
-          git push
+      - name: Upload coverage report
+        uses: actions/upload-artifact@v2
+        with:
+          name: coverage
+          path: coverage.out
