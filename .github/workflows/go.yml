@@ -20,13 +20,15 @@ jobs:
       - name: Install jq
         run: sudo apt-get -y install jq
 
+      - name: Install gocov and gocov-xml
+        run: |
+          go get -u github.com/axw/gocov/gocov
+          go get -u github.com/AlekSi/gocov-xml
+
       - name: Build
         run: go build -v ./...
 
-      - name: Test
-        run: go test -v ./...
-
-      - name: Generate Coverage Report
+      - name: Test and Generate Coverage Report
         run: |
           go test -v ./... -coverprofile=coverage.out
           go tool cover -func=coverage.out > coverage.txt
