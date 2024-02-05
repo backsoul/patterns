@@ -4,7 +4,7 @@ This is a simple example project demonstrating the use of the Factory Pattern in
 
 ## Coverage
 
-Show coverage [aquí](./coverage.html).
+[![Coverage Status](https://img.shields.io/badge/Coverage-xx%25-brightgreen)](enlace-a-tu-informe-de-cobertura)
 
 ## Prerequisites
 

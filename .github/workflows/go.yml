@@ -26,34 +26,19 @@ jobs:
       - name: Test
         run: go test -v ./...
 
-      - name: Run tests and format output
-        run: go test -race -json -v -coverprofile=coverage.txt ./... 2>&1 | tee /tmp/gotest.log | jq .
+      - name: Generate Coverage Report
+        run: |
+          go test -v ./... -coverprofile=coverage.out
+          go tool cover -func=coverage.out > coverage.txt
+          go tool cover -html=coverage.out -o coverage.html
+          gocov convert coverage.out | gocov-xml > coverage.xml
+        shell: bash
 
-      - name: Convert go coverage to corbetura format
-        run: gocover-cobertura < coverage.txt > coverage.xml
-
-      - name: Generate code coverage report
-        uses: irongut/CodeCoverageSummary@v1.3.0
-        with:
-          filename: coverage.xml
-          badge: false
-          fail_below_min: false
-          format: markdown
-          hide_branch_rate: false
-          hide_complexity: true
-          indicators: true
-          output: both
-          thresholds: "60 80"
-
-      - name: Upload coverage report
+      - name: Upload Coverage Artifacts
         uses: actions/upload-artifact@v3
         with:
           name: coverage
-          path: coverage.txt
-
-      - name: Add Coverage PR Comment
-        uses: marocchino/sticky-pull-request-comment@v2
-        if: github.event_name == 'pull_request'
-        with:
-          recreate: true
-          path: code-coverage-results.md
+          path: |
+            coverage.txt
+            coverage.html
+            coverage.xml
