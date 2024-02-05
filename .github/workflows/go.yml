@@ -31,19 +31,19 @@ jobs:
       - name: generate an image
         run: |
           set -x
-          total=`go tool cover -func=coverage.out | grep total: | grep -Eo '[0-9]+\.[0-9]+'`
-          if (( $(echo "$total <= 50" | bc -l) )) ; then
-              COLOR=red
+          total=$(go tool cover -func=coverage.out | grep total: | grep -Eo '[0-9]+\.[0-9]+')
+          if (( $(echo "$total <= 50" | bc -l) )); then
+            COLOR=red
           elif (( $(echo "$total > 80" | bc -l) )); then
-              COLOR=green
+            COLOR=green
           else
-              COLOR=orange
+            COLOR=orange
           fi
 
           git fetch
           git checkout badge -f
           git pull
-          git merge origin/master  
+          git merge --allow-unrelated-histories origin/master
           curl "https://img.shields.io/badge/coverage-$total%25-$COLOR" > badge.svg
           git add .
           git commit -m "added badge"
