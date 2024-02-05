@@ -24,6 +24,9 @@ jobs:
         run: |
           go get -u github.com/axw/gocov/gocov
           go get -u github.com/AlekSi/gocov-xml
+        env:
+          GOBIN: $GOPATH/bin
+          GOPATH: $HOME/go
 
       - name: Build
         run: go build -v ./...
@@ -33,7 +36,7 @@ jobs:
           go test -v ./... -coverprofile=coverage.out
           go tool cover -func=coverage.out > coverage.txt
           go tool cover -html=coverage.out -o coverage.html
-          $GOPATH/bin/gocov convert coverage.out | $GOPATH/bin/gocov-xml > coverage.xml
+          gocov convert coverage.out | gocov-xml > coverage.xml
         shell: bash
 
       - name: Upload Coverage Artifacts
