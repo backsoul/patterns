@@ -18,10 +18,10 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Set up Docker Compose
-        run: docker-compose -f docker-compose.test.yml up -d
+        run: docker-compose -f docker-compose.yml up -d
 
       - name: Run tests
-        run: docker-compose -f docker-compose.test.yml exec test go test ./...
+        run: docker-compose -f docker-compose.yml exec test go test ./...
 
       - name: Display test results (customize based on your test output format)
         run: cat test-results.txt # Adjust based on your test results location
