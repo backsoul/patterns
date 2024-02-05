@@ -28,9 +28,6 @@ jobs:
         run: go test -coverprofile=coverage.out ./...
 
       - name: Calculate code complexity
-        run: go get github.com/fzipp/gocyclo/cmd/gocyclo && gocyclo -over 15 .
-
-      - name: Calculate code complexity
         run: |
           go get github.com/fzipp/gocyclo/cmd/gocyclo
           COMPLEXITY=$(gocyclo -over 15 .)
