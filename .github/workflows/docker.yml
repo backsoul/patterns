@@ -1,4 +1,4 @@
-name: Docker
+name: Go Test
 
 on:
   push:
@@ -7,23 +7,38 @@ on:
     branches: ["master"]
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
+
+    services:
+      docker:
+        image: ghcr.io/backsoul/patterns:latest
+        volumes:
+          - .:/app
+        networks:
+          - web
+        ports:
+          - 8000:8000
+        environment:
+          NODE_ENV: test
+          TZ: America/Bogota
+          VIRTUAL_HOST: test.backsoul.dev
+          VIRTUAL_PORT: 8000
+          LETSENCRYPT_HOST: test.backsoul.dev
+          LETSENCRYPT_EMAIL: test@example.com # Replace with your email
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Set up Docker
-        uses: docker/setup-docker@v2
-        with:
-          dockerfile: Dockerfile
-          context: .
+      - name: Set up Docker Compose
+        run: docker-compose -f docker-compose.test.yml up -d
 
-      - name: Log in to Docker registry
-        run: docker login ghcr.io -u ${{ secrets.GHCR_USERNAME }} -p ${{ secrets.GHCR_TOKEN }}
+      - name: Run tests
+        run: docker-compose -f docker-compose.test.yml exec test go test ./...
 
-      - name: Pull Docker image
-        run: docker pull ghcr.io/backsoul/patterns:latest
+      - name: Display test results (customize based on your test output format)
+        run: cat test-results.txt # Adjust based on your test results location
 
-      - name: Run tests in the 'test' service container
-        run: docker-compose run --rm test go test ./...
+      - name: Tear down Docker Compose
+        run: docker-compose -f docker-compose.test.yml down
