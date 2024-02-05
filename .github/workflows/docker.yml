@@ -9,23 +9,9 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-
     services:
       docker:
         image: ghcr.io/backsoul/patterns:latest
-        volumes:
-          - .:/app
-        networks:
-          - web
-        ports:
-          - 8000:8000
-        environment:
-          NODE_ENV: test
-          TZ: America/Bogota
-          VIRTUAL_HOST: test.backsoul.dev
-          VIRTUAL_PORT: 8000
-          LETSENCRYPT_HOST: test.backsoul.dev
-          LETSENCRYPT_EMAIL: test@example.com # Replace with your email
 
     steps:
       - name: Checkout repository
