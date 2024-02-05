@@ -26,8 +26,11 @@ jobs:
       - name: Test
         run: go test -v ./...
 
+      - name: Install gotestfmt
+        run: go get -u gotest.tools/gotestfmt
+
       - name: Run tests
-        run: go test -race -json -v -coverprofile=coverage.txt ./... 2>&1 | tee /tmp/gotest.log | gotestfmt
+        run: go test -race -json -v -coverprofile=coverage.txt ./... 2>&1 | tee /tmp/gotest.log | $GOPATH/bin/gotestfmt
 
       - name: Convert go coverage to corbetura format
         run: gocover-cobertura < coverage.txt > coverage.xml
