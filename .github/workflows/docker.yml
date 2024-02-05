@@ -18,12 +18,24 @@ jobs:
       - name: Install dependencies
         run: go mod download
 
-      - name: Run test
-        run: go test -race -json -v -coverprofile=coverage.txt ./... 2>&1 | tee /tmp/gotest.log | gotestfmts
+      - name: Run tests and generate coverage report
+        run: go test -coverprofile=coverage.out ./...
 
-      # Add this
-      - name: Update Coverage Badge
-        # GitHub actions: default branch variable
-        # https://stackoverflow.com/questions/64781462/github-actions-default-branch-variable
-        if: github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
-        uses: we-cli/coverage-badge-action@main
+      - name: Upload coverage report
+        uses: actions/upload-artifact@v2
+        with:
+          name: coverage
+          path: coverage.out
+
+      - name: Generate Coverage Badge
+        run: |
+          COVERAGE_BADGE_URL="URL_DEL_BADGE_QUE_COPIASTE_DE_BADGEN"
+          curl -s https://github.com/backsoul/patterns/blob/branch/coverage.out > coverage-badge.svg
+        env:
+          COVERAGE_BADGE_URL: https://github.com/backsoul/patterns/blob/branch/coverage.out
+
+      - name: Upload Coverage Badge
+        uses: actions/upload-artifact@v2
+        with:
+          name: coverage-badge
+          path: coverage-badge.svg

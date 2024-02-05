@@ -1,5 +1,6 @@
 [![Go](https://github.com/backsoul/patterns/actions/workflows/docker.yml/badge.svg?branch=master)](https://github.com/backsoul/patterns/actions/workflows/docker.yml)
-[![Coverage](https://<you>.github.io/<repo>/badges/coverage.svg)](https://github.com/bacskoul/patterns/actions)
+
+[![Coverage Badge](https://github.com/backsoul/patterns/coverage-badge.svg)](https://github.com/backsoul/patterns/coverage.out)
 
 # Go Database Factory Pattern Example
 
