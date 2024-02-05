@@ -32,7 +32,7 @@ jobs:
 
       - name: Run Tests
         run: |
-          docker-compose exec test go test ./...
+          docker-compose up test
         working-directory: .
 
       - name: Stop Docker Compose
