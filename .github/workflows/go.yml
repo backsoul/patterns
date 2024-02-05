@@ -1,36 +1,34 @@
-name: Go Test
+name: Go
 
 on:
   push:
-    branches:
-      - master
+    branches: ["main"]
   pull_request:
-    branches:
-      - "*"
+    branches: ["main"]
 
 jobs:
-  test:
+  build:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v3
+        with:
+          token: ${{ github.token }}
 
       - name: Set up Go
-        uses: actions/setup-go@v2
+        uses: actions/setup-go@v3
         with:
           go-version: 1.21
 
-      - name: Install dependencies
-        run: go mod download
+      - name: Run all tests
+        run: go test ./... -coverprofile coverage.out
 
-      - name: Run tests and generate coverage report
-        run: go test -coverprofile=coverage.out ./...
+      - name: Run all benchmarks
+        run: go test -bench=. -benchmem -v ./...
 
       - name: Configure git
         run: |
           git config --global user.name "CI Bot"
-          git config --global user.email "backsoul@backsoul.dev"
+          git config --global user.email "bot@eremeev.ca"
 
       - name: generate an image
         run: |
@@ -51,4 +49,5 @@ jobs:
           curl "https://img.shields.io/badge/coverage-$total%25-$COLOR" > badge.svg
           git add .
           git commit -m "added badge"
-          git push
+          git push 
+
