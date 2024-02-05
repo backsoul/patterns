@@ -10,21 +10,11 @@ jobs:
   test:
     runs-on: ubuntu-latest
     services:
-      docker:
+      test:
         image: ghcr.io/backsoul/patterns:latest
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
-
-      - name: Set up Docker Compose
-        run: docker-compose -f docker-compose.yml up -d
-
       - name: Run tests
-        run: docker-compose -f docker-compose.yml exec test go test ./...
-
-      - name: Display test results (customize based on your test output format)
-        run: cat test-results.txt # Adjust based on your test results location
-
-      - name: Tear down Docker Compose
-        run: docker-compose -f docker-compose.test.yml down
+        run: |
+          docker exec -i test go test ./...
