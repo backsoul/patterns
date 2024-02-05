@@ -1,7 +1,5 @@
 [![Go](https://github.com/backsoul/patterns/actions/workflows/go.yml/badge.svg?branch=master)](https://github.com/backsoul/patterns/actions/workflows/go.yml)
 
-[![Coverage Badge](https://github.com/backsoul/patterns/raw/master/coverage-badge.svg)](https://github.com/backsoul/patterns/blob/master/coverage.out)
-
 # Go Database Factory Pattern Example
 
 This is a simple example project demonstrating the use of the Factory Pattern in Go to connect to MySQL and PostgreSQL databases. The project provides a flexible way to switch between different types of databases by configuring the `.env` file.
