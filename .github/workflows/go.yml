@@ -33,7 +33,7 @@ jobs:
           go test -v ./... -coverprofile=coverage.out
           go tool cover -func=coverage.out > coverage.txt
           go tool cover -html=coverage.out -o coverage.html
-          gocov convert coverage.out | gocov-xml > coverage.xml
+          $GOPATH/bin/gocov convert coverage.out | $GOPATH/bin/gocov-xml > coverage.xml
         shell: bash
 
       - name: Upload Coverage Artifacts
