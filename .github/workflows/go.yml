@@ -39,12 +39,7 @@ jobs:
           else
             COLOR=orange
           fi
-
-          git fetch
-          git checkout badge -f
-          git pull
-          git merge --allow-unrelated-histories origin/master
           curl "https://img.shields.io/badge/coverage-$total%25-$COLOR" > badge.svg
           git add .
-          git commit -m "added badge"
+          git commit -m "CI: added badge"
           git push
