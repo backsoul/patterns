@@ -11,9 +11,13 @@ jobs:
     runs-on: ubuntu-latest
     services:
       pattern:
-        image: ghcr.io/backsoul/patterns:latest # Reemplaza "your-image-name" con el nombre de tu imagen de Docker
+        image: ghcr.io/backsoul/patterns:latest
         ports:
-          - 8000:8000 # Asegúrate de que el puerto del contenedor sea el mismo que en tu Dockerfile
+          - 8000:8000
+      test:
+        image: ghcr.io/backsoul/patterns:latest
+        ports:
+          - 8000:8000
     steps:
       - uses: actions/checkout@v3
 
@@ -30,4 +34,4 @@ jobs:
 
       - name: Test
         run: |
-          docker exec pattern go test -v ./...
+          docker exec test go test -v ./tests
