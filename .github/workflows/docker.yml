@@ -9,17 +9,21 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    services:
-      pattern:
-        image: ghcr.io/backsoul/patterns:latest
-        ports:
-          - 8000:8000
-      test:
-        image: ghcr.io/backsoul/patterns:latest
-        ports:
-          - 8000:8000
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Docker
+        uses: docker/setup-docker@v2
+        with:
+          dockerfile: Dockerfile
+          context: .
+
+      - name: Log in to Docker registry
+        run: docker login ghcr.io -u ${{ secrets.GHCR_USERNAME }} -p ${{ secrets.GHCR_TOKEN }}
+
+      - name: Pull Docker image
+        run: docker pull ghcr.io/backsoul/patterns:latest
 
       - name: Set up Go
         uses: actions/setup-go@v4
@@ -34,4 +38,4 @@ jobs:
 
       - name: Test
         run: |
-          docker exec test go test -v ./tests
+          docker run ghcr.io/backsoul/patterns:latest go test -v ./tests
