@@ -19,18 +19,18 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@v2
         with:
-          go-version: 1.21
+          go-version: 1.21 # Use the version compatible with your project
 
-      - name: Install dependencies
-        run: go mod download
+      - name: Install gocloc
+        run: go get -u github.com/hhatto/gocloc/cmd/gocloc
 
       - name: Run tests and generate coverage report
         run: go test -coverprofile=coverage.out ./...
 
       - name: Calculate code complexity
         run: |
-          go get github.com/fzipp/gocyclo/cmd/gocyclo
-          COMPLEXITY=$(gocyclo -over 15 .)
+          gocloc --by-file --exclude-dir=vendor .
+          COMPLEXITY=$(gocloc --by-file --exclude-dir=vendor --not-match='^SUM.*' . | awk '{if ($2 > 15) print $2}')
           echo "COMPLEXITY=$COMPLEXITY" >> $GITHUB_ENV
 
       - name: Upload coverage report
