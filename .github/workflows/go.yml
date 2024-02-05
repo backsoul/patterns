@@ -12,7 +12,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          token: ${{ github.token }}
+          token: ${{ github.GHCR_TOKEN }}
 
       - name: Set up Go
         uses: actions/setup-go@v3
@@ -49,5 +49,4 @@ jobs:
           curl "https://img.shields.io/badge/coverage-$total%25-$COLOR" > badge.svg
           git add .
           git commit -m "added badge"
-          git push 
-
+          git push
