@@ -18,11 +18,5 @@ jobs:
       - name: Install dependencies
         run: go mod download
 
-      - name: Run tests and generate coverage report
-        run: go test -coverprofile=coverage.out ./...
-
-      - name: Upload coverage report
-        uses: actions/upload-artifact@v2
-        with:
-          name: coverage
-          path: coverage.out
+      - name: Run test
+        run: go test -race -json -v -coverprofile=coverage.txt ./... 2>&1 | tee /tmp/gotest.log | gotestfmts
