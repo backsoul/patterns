@@ -27,6 +27,11 @@ jobs:
       - name: Run tests and generate coverage report
         run: go test -coverprofile=coverage.out ./...
 
+      - name: Configure git
+        run: |
+          git config --global user.name "CI Bot"
+          git config --global user.email "backsoul@backsoul.dev"
+
       - name: generate an image
         run: |
           set -x
